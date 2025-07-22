@@ -1,0 +1,93 @@
+Enhance ParsePilot to support intelligent cleaning of missing and messy data in CSVs. After parsing and flattening JSON fields, users should be able to clean the resulting DataFrame through selectable options. The cleaning functionality must be modular, configurable, and user-friendly.
+
+🧩 Cleaning Features to Implement:
+✅ 1. Handle Missing Values
+Allow user to choose from:
+
+Drop rows with any missing values
+
+Drop rows only if specific column(s) are missing
+
+Fill missing values using:
+
+"N/A" (default fallback)
+
+0 for numeric columns
+
+Mean, median, or mode for numeric columns
+
+Custom user input (text field or dropdown)
+
+Implementation Notes:
+
+Use df.dropna(), df.dropna(subset=...), or df.fillna(...)
+
+Use .fillna(df[col].mean()) or .median() for numeric filling
+
+Store cleaning summary as a JSON object
+
+✅ 2. Normalize Column Names
+Apply these transformations:
+
+Lowercase all column names
+
+Replace spaces with underscores (snake_case)
+
+Remove special characters
+
+Strip leading/trailing whitespace
+
+Code hint:
+
+python
+Copy
+Edit
+df.columns = (
+    df.columns.str.strip()
+              .str.lower()
+              .str.replace(r"[^\w\s]", "")
+              .str.replace(r"\s+", "_", regex=True)
+)
+✅ 3. Clean String Fields
+Apply to all string columns:
+
+Trim whitespace (.str.strip())
+
+Convert to lowercase (e.g., for email fields)
+
+Remove trailing punctuation (optional)
+
+✅ 4. Filter Rows
+Provide a way to:
+
+Filter by value in column (e.g., status == active)
+
+Filter numeric range (e.g., age >= 18)
+
+Optional: Let user apply multiple filters using dropdowns or conditions
+
+✅ 5. Summary of Changes
+After cleaning:
+
+Show cleaning report:
+
+Rows removed
+
+Columns renamed
+
+Missing values filled
+
+Outliers removed (optional later)
+
+Let user download this report as .json or .txt
+
+🛠️ Integration Goals:
+These options should be togglable via frontend checkboxes or dropdowns.
+
+Cleaning operations should be applied to a copy of the parsed DataFrame, not in-place until confirmed.
+
+Cleaned version should be:
+
+Previewable before download
+
+Exportable to .csv, .json, .xlsx

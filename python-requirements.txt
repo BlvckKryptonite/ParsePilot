@@ -1,0 +1,10 @@
+# Python dependencies for ParsePilot deployment
+# Data processing and analysis
+pandas>=2.3.1
+openpyxl>=3.1.5
+
+# Additional dependencies that might be needed for deployment
+# Uncomment if deploying as a pure Python/Flask application:
+# flask>=2.3.0
+# flask-cors>=4.0.0
+# gunicorn>=21.2.0

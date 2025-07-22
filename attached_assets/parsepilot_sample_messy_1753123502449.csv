@@ -1,0 +1,9 @@
+id,name,age,metadata,email
+1,Alice Johnson,34,"{""location"": {""city"": ""New York"", ""zip"": ""10001""}, ""status"": ""active"", ""preferences"": {""newsletter"": true}}",alice@example.com
+2,Bob Smith,,"{""location"": {""city"": ""San Francisco""}, ""status"": ""inactive"", ""preferences"": {""newsletter"": false}}",bob.smith@example.com
+3,,29,"{""location"": {""city"": ""Austin"", ""zip"": null}, ""status"": ""active""}",charlie@example.com
+4,Dana Lee,42,,
+5,Evan White,27,"{""location"": {""city"": ""Chicago"", ""zip"": ""60614""}, ""status"": ""active"", ""preferences"": {}}",evan.white@example.com
+6,Muma Kalobwe,28,Malmo,mumathedeveloper@gmail.com
+7,Jason Vorhees,,,json"gmail.com
+8,Kratos,1007,Sparta,
