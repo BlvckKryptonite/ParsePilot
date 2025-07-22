@@ -47,7 +47,7 @@ ParsePilot transforms messy CSV data into clean, analysis-ready datasets using a
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/ParsePilot.git
+   git clone https://github.com/BlvckKryptonite/ParsePilot.git
    cd ParsePilot
    ```
 
@@ -67,9 +67,6 @@ ParsePilot transforms messy CSV data into clean, analysis-ready datasets using a
    ```bash
    npm run dev
    ```
-
-5. **Open your browser**
-   Navigate to `http://localhost:5000`
 
 ## 📖 Usage
 
@@ -165,10 +162,10 @@ ParsePilot/
 
 ```bash
 # OpenAI Integration (optional)
-OPENAI_API_KEY=your_openai_api_key_here
+OPENAI_API_KEY= *** openai_api_key_here ***
 
 # Database (optional - uses in-memory storage by default)
-DATABASE_URL=your_postgresql_url_here
+DATABASE_URL= *** postgresql_url ***
 ```
 
 ## 🤝 Contributing
@@ -222,7 +219,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- 📧 Email: [support@parsepi.com](mailto:support@parsepi.com)
-- 🐛 Issues: [GitHub Issues](https://github.com/YOUR_USERNAME/ParsePilot/issues)
-- 📖 Documentation: [Wiki](https://github.com/YOUR_USERNAME/ParsePilot/wiki)
-- 💬 Discussions: [GitHub Discussions](https://github.com/YOUR_USERNAME/ParsePilot/discussions)
+- 📧 Email: [support@parsepi.com](mailto:mumathedeveloper@gmail.com)
+- 🐛 Issues: [GitHub Issues](https://github.com/BlvckKryptonite/ParsePilot.git/issues)
+- 📖 Documentation: [Wiki](https://github.com/BlvckKryptonite/ParsePilot.git/wiki)
+- 💬 Discussions: [GitHub Discussions](https://github.com/BlvckKryptonite/ParsePilot.git/discussions)
