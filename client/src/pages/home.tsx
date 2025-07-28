@@ -87,8 +87,47 @@ export default function Home() {
     generateReport: true,
   });
 
+  const handleDeleteFile = () => {
+    setFileData(null);
+    setProcessedData(null);
+    setCleaningOptions({
+      normalizeColumns: {
+        snakeCase: true,
+        removeSpecialChars: true,
+        lowercase: false,
+        trimWhitespace: true,
+      },
+      missingData: {
+        strategy: 'fill',
+        fillValue: 'N/A',
+        fillMethod: 'custom',
+        specificColumns: [],
+      },
+      stringCleaning: {
+        enabled: false,
+        trimWhitespace: true,
+        lowercase: false,
+        removePunctuation: false,
+        specificColumns: [],
+      },
+      filtering: {
+        removeEmptyRows: false,
+        columnFilter: {
+          enabled: false,
+          column: '',
+          operator: 'equals',
+          value: '',
+          minValue: '',
+          maxValue: '',
+        },
+        multipleFilters: [],
+      },
+      generateReport: true,
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 flex flex-col">
       {/* Header */}
       <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -116,27 +155,37 @@ export default function Home() {
           </div>
         </div>
       </header>
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      
+      {/* Main Content */}
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* File Upload */}
-        <FileUpload onFileUploaded={setFileData} onDataProcessed={setProcessedData} />
+        <FileUpload 
+          onFileUploaded={setFileData} 
+          onDataProcessed={setProcessedData}
+          onDeleteFile={handleDeleteFile}
+          hasFile={!!fileData}
+        />
 
         {/* Main Content with Tabs */}
         {fileData && processedData && (
-          <MainTabs 
-            fileData={fileData}
-            processedData={processedData}
-            cleaningOptions={cleaningOptions}
-            onDataUpdated={setProcessedData}
-            onCleaningOptionsChanged={setCleaningOptions}
-          />
+          <div className="mt-6">
+            <MainTabs 
+              fileData={fileData}
+              processedData={processedData}
+              cleaningOptions={cleaningOptions}
+              onDataUpdated={setProcessedData}
+              onCleaningOptionsChanged={setCleaningOptions}
+            />
+          </div>
         )}
       </main>
+      
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <footer className="bg-white border-t border-gray-200 mt-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="text-center text-sm text-gray-600">
             <p>Planned, developed and copyrighted by Muma K.</p>
-            <div className="mt-4 flex items-center justify-center space-x-6">
+            <div className="mt-3 flex items-center justify-center space-x-6">
               <a href="#" className="hover:text-gray-900 transition-colors">Documentation</a>
               <a href="#" className="hover:text-gray-900 transition-colors">API Reference</a>
               <a href="#" className="hover:text-gray-900 transition-colors">Support</a>
