@@ -3,8 +3,14 @@ services:
     name: parsepilot
     env: node
     plan: free
-    buildCommand: npm install && pip install -r python-requirements.txt && npm run build
+    buildCommand: |
+      npm install
+      python3 -m pip install --upgrade pip
+      python3 -m pip install -r python-requirements.txt
+      npm run build
     startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
+      - key: PYTHON_VERSION
+        value: "3.9"

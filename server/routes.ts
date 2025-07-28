@@ -8,8 +8,19 @@ import { spawn } from "child_process";
 import path from "path";
 import fs from "fs";
 
+// Ensure uploads directory exists - use tmp directory in production
+import { mkdirSync } from 'fs';
+import { tmpdir } from 'os';
+
+const uploadsDir = process.env.NODE_ENV === 'production' ? path.join(tmpdir(), 'uploads') : 'uploads';
+try {
+  mkdirSync(uploadsDir, { recursive: true });
+} catch (err) {
+  console.log('Uploads directory creation:', err);
+}
+
 const upload = multer({ 
-  dest: 'uploads/',
+  dest: uploadsDir,
   limits: { fileSize: 100 * 1024 * 1024 } // 100MB limit
 });
 
@@ -26,10 +37,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Process CSV file with Python script
+      console.log('Starting Python analysis...');
+      console.log('File path:', req.file.path);
+      console.log('File size:', req.file.size);
+      
       const pythonResult = await processCsvWithPython(req.file.path, 'analyze');
       
       if (!pythonResult.success) {
-        return res.status(400).json({ error: pythonResult.error });
+        console.error('Python processing failed:', pythonResult.error);
+        return res.status(400).json({ 
+          error: `Processing failed: ${pythonResult.error}`,
+          details: {
+            filePath: req.file.path,
+            fileExists: require('fs').existsSync(req.file.path)
+          }
+        });
       }
 
       const csvFile = await storage.createCsvFile({
@@ -138,7 +160,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Process with Python script
-      const filePath = path.join('uploads', file.filename);
+      const filePath = path.join(uploadsDir, file.filename);
       const pythonResult = await processCsvWithPython(filePath, 'clean', { 
         cleaningOptions: options,
         jsonConfig: processedData.jsonExtractionConfig,
@@ -182,7 +204,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Export with Python script - use request cleaning options or fallback to stored ones
-      const filePath = path.join('uploads', file.filename);
+      const filePath = path.join(uploadsDir, file.filename);
       const exportOptions = {
         format,
         includeHeaders,
@@ -235,7 +257,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Enhance context with processed data
         const enhancedContext = {
           ...context,
-          processedStats: processedData.stats,
           jsonColumns: file.jsonColumns,
           missingDataPercentage: context.stats?.missingDataPercentage
         };
@@ -287,14 +308,25 @@ Once the API key is configured, I'll be able to provide detailed insights about 
 
 async function processCsvWithPython(filePath: string, operation: string, options?: any): Promise<{ success: boolean; data?: any; error?: string }> {
   return new Promise((resolve) => {
-    const pythonScript = path.join(import.meta.dirname, 'python', 'simple_csv_processor.py');
+    // Handle both development and production paths
+    const isDev = process.env.NODE_ENV === 'development';
+    const pythonScript = isDev 
+      ? path.join(import.meta.dirname, 'python', 'simple_csv_processor.py')
+      : path.join(process.cwd(), 'server', 'python', 'simple_csv_processor.py');
     const args = [pythonScript, filePath, operation];
     
     if (options) {
       args.push(JSON.stringify(options));
     }
 
-    const python = spawn('python3', args);
+    // Try different Python executables for different environments
+    const pythonCmd = process.env.NODE_ENV === 'production' ? 'python3' : 'python3';
+    
+    console.log(`Executing: ${pythonCmd} ${args.join(' ')}`);
+    console.log(`Python script path: ${pythonScript}`);
+    console.log(`File path: ${filePath}`);
+    
+    const python = spawn(pythonCmd, args);
     let output = '';
     let errorOutput = '';
 
@@ -304,18 +336,24 @@ async function processCsvWithPython(filePath: string, operation: string, options
 
     python.stderr.on('data', (data) => {
       errorOutput += data.toString();
+      console.error('Python stderr:', data.toString());
     });
 
     python.on('close', (code) => {
+      console.log(`Python script exited with code ${code}`);
+      console.log(`Python stdout: ${output}`);
+      console.log(`Python stderr: ${errorOutput}`);
+      
       if (code === 0) {
         try {
           const result = JSON.parse(output);
           resolve({ success: true, data: result });
         } catch (error) {
-          resolve({ success: false, error: 'Failed to parse Python output' });
+          console.error('Failed to parse Python output:', error);
+          resolve({ success: false, error: `Failed to parse Python output: ${output}` });
         }
       } else {
-        resolve({ success: false, error: errorOutput || 'Python script failed' });
+        resolve({ success: false, error: errorOutput || `Python script failed with code ${code}` });
       }
     });
   });

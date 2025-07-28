@@ -654,11 +654,8 @@ def process_csv(file_path, operation, options=None):
         }
         
         # Include cleaning report if available
-        if operation == 'clean':
-            try:
-                result['cleaningReport'] = cleaning_report
-            except NameError:
-                pass
+        if operation == 'clean' and 'cleaning_report' in locals():
+            result['cleaningReport'] = cleaning_report
             
         return result
         
