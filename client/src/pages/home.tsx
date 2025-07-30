@@ -133,13 +133,14 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4">
-              {/* Logo placeholder - replace with your custom logo */}
-              {/* <img src="your-logo.png" alt="ParsePilot Logo" className="w-10 h-10" /> */}
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <ChartLine className="text-white" size={20} />
-              </div>
+              {/* Custom ParsePilot Logo */}
+              <img 
+                src="attached_assets/parse_pilot_logo.png" 
+                alt="ParsePilot Logo" 
+                className="w-12 h-12 object-contain"
+              />
               <div>
-                <h1 className="text-xl font-bold text-gray-900">ParsePilot</h1>
+                <h1 className="text-xl font-lovelo-bold text-gray-900 tracking-wide">ParsePilot</h1>
                 <p className="text-xs text-gray-500">Clean, Convert & Analyze Messy CSVs</p>
               </div>
             </div>
