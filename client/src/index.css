@@ -70,6 +70,19 @@
   }
 }
 
+/* Custom font classes - Using Orbitron as Lovelo alternative */
+.font-lovelo {
+  font-family: 'Orbitron', 'Exo 2', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+}
+
+.font-lovelo-bold {
+  font-family: 'Orbitron', 'Exo 2', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
 @layer utilities {
   .text-success {
     color: hsl(var(--success));
