@@ -83,64 +83,68 @@ export default function FileUpload({ onFileUploaded, onDataProcessed, onDeleteFi
   });
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+    <div className="w-full">
       {hasFile ? (
         /* File Selected State */
-        <div className="text-center">
-          <div className="flex items-center justify-center space-x-4 p-6 bg-green-50 border border-green-200 rounded-xl">
-            <FileText className="text-green-600" size={24} />
-            <div className="flex-1 text-left">
-              <p className="text-sm font-medium text-green-800">CSV file uploaded successfully</p>
-              <p className="text-xs text-green-600">Ready for processing and cleaning</p>
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
+          <div className="flex items-center justify-between space-x-4 p-4 sm:p-6 bg-green-50 border border-green-200 rounded-xl">
+            <div className="flex items-center space-x-3 sm:space-x-4 flex-1">
+              <FileText className="text-green-600 flex-shrink-0" size={24} />
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-medium text-green-800 truncate">CSV file uploaded successfully</p>
+                <p className="text-xs text-green-600">Ready for processing and cleaning</p>
+              </div>
             </div>
             <Button 
               variant="ghost" 
               size="sm"
               onClick={onDeleteFile}
-              className="text-red-600 hover:text-red-700 hover:bg-red-50"
+              className="text-red-600 hover:text-red-700 hover:bg-red-50 flex-shrink-0"
             >
               <X size={16} className="mr-1" />
-              Remove
+              <span className="hidden sm:inline">Remove</span>
             </Button>
           </div>
         </div>
       ) : (
         /* Upload State */
-        <div className="text-center">
-          <div
-            {...getRootProps()}
-            className={`upload-area border-2 border-dashed rounded-xl p-8 transition-colors cursor-pointer ${
-              isDragActive 
-                ? 'border-primary bg-blue-50' 
-                : 'border-gray-300 hover:border-primary hover:bg-blue-50'
-            }`}
-          >
-            <input {...getInputProps()} />
-            <CloudUpload className="mx-auto text-gray-400 mb-4" size={40} />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Upload your CSV file</h3>
-            <p className="text-gray-500 mb-4">
-              {isDragActive 
-                ? "Drop the file here..." 
-                : "Drag and drop your file here, or click to browse"
-              }
-            </p>
-            <Button disabled={uploadMutation.isPending}>
-              <FolderOpen size={16} className="mr-2" />
-              Choose File
-            </Button>
-            <p className="text-xs text-gray-400 mt-4">Supports .csv files up to 100MB</p>
-          </div>
-          
-          {/* File Processing Status */}
-          {uploadMutation.isPending && (
-            <div className="mt-6">
-              <div className="flex items-center justify-center space-x-2 text-sm text-gray-600 mb-3">
-                <Loader2 className="animate-spin" size={16} />
-                <span>Processing your CSV file...</span>
-              </div>
-              <Progress value={uploadProgress} className="w-full" />
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6 lg:p-8">
+          <div className="text-center">
+            <div
+              {...getRootProps()}
+              className={`upload-area border-2 border-dashed rounded-xl p-8 sm:p-12 lg:p-16 transition-colors cursor-pointer ${
+                isDragActive 
+                  ? 'border-primary bg-blue-50' 
+                  : 'border-gray-300 hover:border-primary hover:bg-blue-50'
+              }`}
+            >
+              <input {...getInputProps()} />
+              <CloudUpload className="mx-auto text-gray-400 mb-4 sm:mb-6" size={48} />
+              <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-2 sm:mb-3">Upload your CSV file</h3>
+              <p className="text-gray-500 mb-4 sm:mb-6 text-sm sm:text-base max-w-md mx-auto">
+                {isDragActive 
+                  ? "Drop the file here..." 
+                  : "Drag and drop your file here, or click to browse"
+                }
+              </p>
+              <Button disabled={uploadMutation.isPending} size="lg" className="mb-4">
+                <FolderOpen size={18} className="mr-2" />
+                Choose File
+              </Button>
+              <p className="text-xs sm:text-sm text-gray-400">Supports .csv files up to 100MB</p>
             </div>
-          )}
+            
+            {/* File Processing Status */}
+            {uploadMutation.isPending && (
+              <div className="mt-6 sm:mt-8">
+                <div className="flex items-center justify-center space-x-2 text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">
+                  <Loader2 className="animate-spin" size={20} />
+                  <span>Processing your CSV file...</span>
+                </div>
+                <Progress value={uploadProgress} className="w-full max-w-md mx-auto" />
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
