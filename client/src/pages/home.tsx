@@ -135,7 +135,7 @@ export default function Home() {
             <div className="flex items-center space-x-4">
              {/* Custom ParsePilot Logo */}
               <img 
-                src="/parse_pilot_logo.png" 
+                src="/logo.png" 
                 alt="ParsePilot Logo" 
                 className="w-12 h-12 object-contain"
                 onError={(e) => {
