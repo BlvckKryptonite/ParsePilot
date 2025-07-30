@@ -140,7 +140,7 @@ export default function Home() {
               </div>
               <div>
                 <h1 className="text-xl font-bold text-gray-900">ParsePilot</h1>
-                <p className="text-xs text-gray-500">Clean, Convert & Analyze Messy CSVs with Nested JSON Fields</p>
+                <p className="text-xs text-gray-500">Clean, Convert & Analyze Messy CSVs</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
@@ -155,37 +155,37 @@ export default function Home() {
           </div>
         </div>
       </header>
-      
       {/* Main Content */}
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* File Upload */}
-        <FileUpload 
-          onFileUploaded={setFileData} 
-          onDataProcessed={setProcessedData}
-          onDeleteFile={handleDeleteFile}
-          hasFile={!!fileData}
-        />
+      <main className="flex-1 px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <div className="max-w-6xl mx-auto">
+          {/* File Upload */}
+          <FileUpload 
+            onFileUploaded={setFileData} 
+            onDataProcessed={setProcessedData}
+            onDeleteFile={handleDeleteFile}
+            hasFile={!!fileData}
+          />
 
-        {/* Main Content with Tabs */}
-        {fileData && processedData && (
-          <div className="mt-6">
-            <MainTabs 
-              fileData={fileData}
-              processedData={processedData}
-              cleaningOptions={cleaningOptions}
-              onDataUpdated={setProcessedData}
-              onCleaningOptionsChanged={setCleaningOptions}
-            />
-          </div>
-        )}
+          {/* Main Content with Tabs */}
+          {fileData && processedData && (
+            <div className="mt-4 sm:mt-6">
+              <MainTabs 
+                fileData={fileData}
+                processedData={processedData}
+                cleaningOptions={cleaningOptions}
+                onDataUpdated={setProcessedData}
+                onCleaningOptionsChanged={setCleaningOptions}
+              />
+            </div>
+          )}
+        </div>
       </main>
-      
       {/* Footer */}
       <footer className="bg-white border-t border-gray-200 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="text-center text-sm text-gray-600">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+          <div className="text-center text-xs sm:text-sm text-gray-600">
             <p>Planned, developed and copyrighted by Muma K.</p>
-            <div className="mt-3 flex items-center justify-center space-x-6">
+            <div className="mt-2 sm:mt-3 flex flex-wrap items-center justify-center gap-3 sm:gap-6">
               <a href="#" className="hover:text-gray-900 transition-colors">Documentation</a>
               <a href="#" className="hover:text-gray-900 transition-colors">API Reference</a>
               <a href="#" className="hover:text-gray-900 transition-colors">Support</a>
