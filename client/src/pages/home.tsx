@@ -133,11 +133,17 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4">
-              {/* Custom ParsePilot Logo */}
+             {/* Custom ParsePilot Logo */}
               <img 
-                src="parse_pilot_logo.png" 
+                src="/parse_pilot_logo.png" 
                 alt="ParsePilot Logo" 
                 className="w-12 h-12 object-contain"
+                onError={(e) => {
+                  // Fallback to placeholder if logo fails to load
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  target.nextElementSibling?.classList.remove('hidden');
+                }}
               />
               <div>
                 <h1 className="text-xl font-lovelo-bold text-gray-900 tracking-wide">ParsePilot</h1>
