@@ -193,7 +193,7 @@ export default function Home() {
           <div className="text-center text-xs sm:text-sm text-gray-600">
             <p>Planned, developed and copyrighted by Muma K.</p>
             <div className="mt-2 sm:mt-3 flex flex-wrap items-center justify-center gap-3 sm:gap-6">
-              <a href="https://github.com/BlvckKryptonite/ParsePilot/edit/main/README.md" className="hover:text-gray-900 transition-colors">Documentation</a>
+              <a href="https://github.com/BlvckKryptonite/ParsePilot/edit/main/README.md" rel="noopener norefferer" target="_blank" className="hover:text-gray-900 transition-colors">Documentation</a>
             </div>
           </div>
         </div>
